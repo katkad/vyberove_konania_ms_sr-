@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Trala;
 use URI;
 use WWW::Mechanize;
 use HTML::TreeBuilder 5 -weak;
