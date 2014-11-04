@@ -8,7 +8,7 @@ use lib $FindBin::Bin;
 use Trala;
 use URI;
 use WWW::Mechanize;
-use HTML::TreeBuilder 5 -weak;
+use HTML::TreeBuilder;
 use Database::DumpTruck;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
