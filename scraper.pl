@@ -11,6 +11,7 @@ use URI;
 use WWW::Mechanize;
 use HTML::TreeBuilder;
 use Database::DumpTruck;
+use Encode qw/decode_utf8/;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
@@ -62,7 +63,7 @@ sub do_detail
 		$v = new URI ($link->[0])->abs ($resp->request->uri)->as_string
 			if $link;
 
-		$row{$k} = $v;
+		$row{decode_utf8($k)} = decode_utf8($v);
 	}
 
 #	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
