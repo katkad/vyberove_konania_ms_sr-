@@ -15,7 +15,7 @@ use Database::DumpTruck;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
-my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata', debug => 1 });
+my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata' });
 
 sub do_detail
 {
@@ -64,15 +64,13 @@ sub do_detail
 			if $link;
 
 		# Remove diacritics so we can use data from page to create columns
-		$k_db = NKFD($k);
-		$k =~ s/\p{NonspacingMark}//g;
-		$v_db = NKFD($v);
-		$v =~ s/\p{NonspacingMark}//g;
+		my $k_db = NFKD($k);
+		$k_db =~ s/\p{NonspacingMark}//g;
 
-		$row{$k_db} = $v_db;
+		$row{$k_db} = $v;
 	}
 
-#	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
+	print $row{"Datum uzavierky"} . "\n";
 
 	$dt->upsert (\%row);
 }
