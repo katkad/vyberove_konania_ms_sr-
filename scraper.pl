@@ -15,7 +15,7 @@ use Database::DumpTruck;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
-my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata' });
+my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata', debug => 1 });
 
 sub do_detail
 {
