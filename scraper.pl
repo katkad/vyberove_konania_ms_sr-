@@ -61,10 +61,10 @@ sub do_detail
 		$v = new URI ($link->[0])->abs ($resp->request->uri)->as_string
 			if $link;
 
-		$row{'aa'} = 'bb';
+		$row{$k} = $v;
 	}
 
-#	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
+	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
 
 	$dt->upsert (\%row);
 }
