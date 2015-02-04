@@ -15,7 +15,7 @@ use Database::DumpTruck;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
-my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata', debug => 1 });
+my $dt = new Database::DumpTruck ({ dbname => 'data.sqlite', table => 'swdata' });
 
 sub do_detail
 {
@@ -66,11 +66,12 @@ sub do_detail
 		# Remove diacritics so we can use data from page to create columns
 		my $k_db = NFKD($k);
 		$k_db =~ s/\p{NonspacingMark}//g;
+		$k_db =~ s/[ \/]/_/;
 
 		$row{$k_db} = $v;
 	}
 
-	print $row{"Datum uzavierky"} . "\n";
+	print $row{"Datum_uzavierky"} . "\n";
 
 	$dt->upsert (\%row);
 }
