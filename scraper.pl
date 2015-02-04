@@ -65,7 +65,7 @@ sub do_detail
 		$row{$k} = $v;
 	}
 
-	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
+#	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
 
 	$dt->upsert (\%row);
 }
