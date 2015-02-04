@@ -66,7 +66,7 @@ sub do_detail
 		# Remove diacritics so we can use data from page to create columns
 		my $k_db = NFKD($k);
 		$k_db =~ s/\p{NonspacingMark}//g;
-		$k_db =~ s/[ \/]/_/;
+		$k_db =~ s/[ \/]/_/g;
 
 		$row{$k_db} = $v;
 	}
