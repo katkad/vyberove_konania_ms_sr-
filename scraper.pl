@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use utf8;
+use Unicode::Normalize;
 use FindBin;
 use lib $FindBin::Bin;
 use Trala;
@@ -11,7 +12,6 @@ use URI;
 use WWW::Mechanize;
 use HTML::TreeBuilder;
 use Database::DumpTruck;
-use Encode qw/decode_utf8/;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
@@ -63,7 +63,13 @@ sub do_detail
 		$v = new URI ($link->[0])->abs ($resp->request->uri)->as_string
 			if $link;
 
-		$row{decode_utf8($k)} = decode_utf8($v);
+		# Remove diacritics so we can use data from page to create columns
+		$k_db = NKFD($k);
+		$k =~ s/\p{NonspacingMark}//g;
+		$v_db = NKFD($v);
+		$v =~ s/\p{NonspacingMark}//g;
+
+		$row{$k_db} = $v_db;
 	}
 
 #	print $row{"D\x{e1}tum uz\x{e1}vierky"} . "\n";
