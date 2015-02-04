@@ -10,7 +10,7 @@ use URI;
 use WWW::Mechanize;
 use HTML::TreeBuilder;
 use Database::DumpTruck;
-use Encode qw/decode_utf8/;
+use Encode qw/encode_utf8/;
 
 my $root = new URI ('http://www.justice.gov.sk/Stranky/Ministerstvo/Vyberove-konania-v-rezorte/Zoznam-vyberovych-konani.aspx');
 my $mech = new WWW::Mechanize;
@@ -51,8 +51,8 @@ sub do_detail
 		my $popiska = shift @divs;
 		my $hodnota = shift @divs;
 
-		my ($k, $v) = (decode_utf8($popiska->as_trimmed_text),
-			decode_utf8($hodnota->as_trimmed_text));
+		my ($k, $v) = (encode_utf8($popiska->as_trimmed_text),
+			encode_utf8($hodnota->as_trimmed_text));
 
 		# Beautify a bit!
 		$k =~ s/:$//;
